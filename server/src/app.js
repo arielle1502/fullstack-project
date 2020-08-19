@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 // have to pass waht type of errors we want to log, combine will log warnigs and errors
-app.use(morgan('combine'));
+app.use(morgan('combined'));
 
 app.get('/status', (req, res) => {
   res.send({message: 'hello world'});
