@@ -4,7 +4,7 @@ const { response } = require('express');
 module.exports = {
 async register(req, res){
     try{
-      // create will enter data into a database
+      // create() will enter data into a database
      const user = await User.create(req.body)
      res.send(user.toJSON())
     }catch (err){
