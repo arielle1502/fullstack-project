@@ -1,12 +1,38 @@
 <template>
-  <div class="hello">
-   
+  <div>
+    <!--Navbar-->
+    <b-navbar
+      toggleable="sm"
+      type="light"
+      variant="light"
+      fixed="top"
+      class="shadow-lg border-bottom"
+    >
+      <b-navbar-brand to="/">Vue Project</b-navbar-brand>
+
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav>
+          <b-nav-item href="#">Browse</b-nav-item>
+        </b-navbar-nav>
+
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <b-nav-form>
+            <router-link to="/login" class="btn btn-primary mr-2">Login</router-link>
+            <router-link to="/register" class="btn btn-secondary">Register</router-link>
+          </b-nav-form>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+    <!--/Navbar-->
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'AppHeader',
   props: {
     msg: String
   }

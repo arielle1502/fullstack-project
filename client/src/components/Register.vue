@@ -1,19 +1,22 @@
 <template>
-<div class="container">
-<form>
-  <div class="form-group">
-    <input class="form-control" type="email" name="email" placeholder="email" v-model="email" />
-    <input
-      class="form-control"
-      type="password"
-      name="password"
-      placeholder="password"
-      v-model="password"
-    />
-    <div v-html="error" class="error"></div>
-    <button @click="register" class="btn btn-primary">Register</button>
-  </div>
-  </form>
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-8 py-5">
+        <!--Login Bootstrap Card-->
+        <b-card class="text-center shadow-lg bg-light mt-5">
+          <h4 slot="header" class="text-primary m-0">Register</h4>
+          <b-form-input type="email" name="email" placeholder="email" v-model="email" class="mb-3"></b-form-input>
+          <b-form-input type="password" name="password" placeholder="password" v-model="password"></b-form-input>
+          <!-- Errors display div-->
+          <b-card-text
+            v-html="error"
+            class="error mt-3"
+          >Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+          <b-button variant="primary" class="w-100" @click="register">Register</b-button>
+        </b-card>
+        <!-- /Login Bootstrap Card-->
+      </div>
+    </div>
   </div>
 </template>
 
