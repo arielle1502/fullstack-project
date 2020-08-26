@@ -2,6 +2,7 @@
   <div class="hello">
     <input type="email" name="email" placeholder="Email" v-model="email"/>
     <input type="password" name="password" placeholder="Password" v-model="password"/>
+    <div v-html="error" class="error"></div>
     <button @click="register">Register</button>
     
   </div>
@@ -14,17 +15,22 @@ export default {
   data() {
     return{
       email: "tst@test.com",
-      password: "password"
+      password: "password",
+      error: null
     };
   },
   methods:{
     async register() {
-      const response = await AuthenticationService.register(
+      try{
+      await AuthenticationService.register(
         {
       email: this.email,
       password: this.password
     });
-    console.log(response.data)
+      }catch (error){
+        // found the right side below by triggering an error and looking inn vue dev tools and seeing the output
+        this.error = error.response.data.error
+      }
     },
   },
 };
@@ -32,6 +38,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.error{
+  color:red;
+}
+
 h3 {
   margin: 40px 0 0;
 }
