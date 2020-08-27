@@ -1,5 +1,12 @@
 const {User} = require('../models');
-const { response } = require('express');
+const jwt = require('jsonwebtoken');
+const config = require('../config/config')
+
+function jwtSignUser(user){
+  const tokenExpireTime = 60 * 60 * 24 * 7;
+  // sign is inside of jwt and takes three arguements, fusrt is the payload(user info) and the second is a secret password, the third is the expiry time
+  return jwt.sign(user, config.auth.jwtSecret, {expiresIn: tokenExpireTime});
+}
 
 module.exports = {
 async register(req, res){
@@ -39,7 +46,8 @@ async register(req, res){
       // if it is all correct then well take the data in the database, convert it to json, store it in a variable and send it back to them
       const userJSON = user.toJSON();
       res.send({
-        user: userJSON
+        user: userJSON,
+        token: jwtSignUser(userJSON)
       })
 
     }catch (err){
