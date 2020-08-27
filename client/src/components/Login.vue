@@ -4,7 +4,7 @@
       <div class="col-8 py-5">
         <!--Login Bootstrap Card-->
         <b-card class="text-center shadow-lg bg-light mt-5">
-          <h4 slot="header" class="text-primary m-0">Register</h4>
+          <h4 slot="header" class="text-primary m-0">Login</h4>
           <b-form-input type="email" name="email" placeholder="email" v-model="email" class="mb-3"></b-form-input>
           <b-form-input type="password" name="password" placeholder="password" v-model="password"></b-form-input>
           <!-- Errors display div-->
@@ -12,7 +12,7 @@
             v-html="error"
             class="error mt-3"
           >Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-          <b-button variant="primary" class="w-100" @click="register">Register</b-button>
+          <b-button variant="primary" class="w-100" @click="login">Login</b-button>
         </b-card>
         <!-- /Login Bootstrap Card-->
       </div>
@@ -23,7 +23,7 @@
 <script>
 import AuthenticationService from "@/services/AuthenticationService";
 export default {
-  name: "Register",
+  name: "HelloWorld",
   data() {
     return {
       email: "test@test.com",
@@ -32,9 +32,9 @@ export default {
     };
   },
   methods: {
-    async register() {
+    async login() {
       try {
-        await AuthenticationService.register({
+        await AuthenticationService.login({
           email: this.email,
           password: this.password,
         });
