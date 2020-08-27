@@ -20,8 +20,9 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
-            <router-link to="/login" class="btn btn-primary mr-2">Login</router-link>
-            <router-link to="/register" class="btn btn-secondary">Register</router-link>
+            <!-- the if statement below checks to see if we are logged in, if we are then the register and login button will not show -->
+            <router-link v-if="!$store.state.isUserLoggedIn" to="/login" class="btn btn-primary mr-2">Login</router-link>
+            <router-link v-if="!$store.state.isUserLoggedIn" to="/register" class="btn btn-secondary">Register</router-link>
           </b-nav-form>
         </b-navbar-nav>
       </b-collapse>
