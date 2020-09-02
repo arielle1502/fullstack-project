@@ -2,7 +2,7 @@
   <div>
     <!--Panel Card-->
     <b-card class="text-left shadow-lg bg-light border-0 rounded-0">
-        <h4 slot="header" class="text-primary m-0 border-0 rounded-0">{{title}}</h4>
+        <h4 slot="header" class="text-primary m-0 mt-3 border-0 rounded-0">{{title}}</h4>
         <slot>
     <!--Slot can be used to pass html into this section or slot. eg. <panel>slot cotent</panel>-->
         </slot>
