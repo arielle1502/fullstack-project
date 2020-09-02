@@ -1,42 +1,49 @@
-const { DataTypes } = require("sequelize")
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt') // bcrypt allows passwords to be hashed and salted
 
-async function hashPassword(user){
-  if (!user.changed('password')){
-    return;
-  }
-  // salt adds an extra passwrod to teh end of our passwrods, adn we set teh amount of characters
-  const salt = await bcrypt.genSalt(10)
-  // hash is housed inside of bcrypt, which will hash the users passwrod and we'll get a long string of numbers and letters and stoer it in hashPasswrodValue
-  const hashPasswordValue = await bcrypt.hash(user.password, salt);
-  // then we set the password in the user object to the new hashed passwrod
-  user.setDataValue('password', hashPasswordValue)
-
+//Hashes passwords
+async function hashPassword(user) {
+    //If changes have been made to the password in the user model return
+    if (!user.changed('password')) {
+        return;
+    }
+    //Generates a slat to add to the password
+    try {
+        const salt = await bcrypt.genSalt(10);
+        //Hashes the password and salt
+        const hashPasswordValue = await bcrypt.hash(user.password, salt);
+        //Saves the hashed password to the user model
+        user.setDataValue('password', hashPasswordValue)
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-module.exports = (sequelize, Sequelize) => {
-    const User = sequelize.define('User', {
-    
-    email: { type: DataTypes.STRING, unique: true },
-    password: { type: DataTypes.STRING },
-    },
-    {
-    hooks: {
-    beforeCreate: hashPassword,
-    beforeUpdate: hashPassword,
-    beforeSave: hashPassword,
-    }
-    }
-    )
-    User.prototype.comparePassword = async function (password) {
-    try {
-    const validPassword = await bcrypt.compare(password, this.password);
-    return validPassword;
-    } catch (error) {
-    console.log("Wrong password");
-    }
-    }
-    
-    return User
-    
-    }
+//User Sequelize Model
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define('User',
+      //Defines the user model
+      {
+          email: { type: DataTypes.STRING, unique: true },
+          password: { type: DataTypes.STRING }
+      },
+      //Hooks allow us to run functions when a event occurs
+      {
+          hooks: {
+              //beforeCreate: hashPassword,
+              //beforeUpdate: hashPassword,
+              beforeSave: hashPassword,
+          }
+      })
+  //Here we are attaching a method to the User Model under prototype
+  //This way we can access comparePassword wherever we have the user model
+  User.prototype.comparePassword = async function (password) {
+      try {
+          const validPassword = await bcrypt.compare(password, this.password);
+          return validPassword;
+      } catch (error) {
+          console.log("Wrong password");
+      }
+  }
+
+  return User
+}
