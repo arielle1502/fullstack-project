@@ -14,7 +14,7 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item href="#">Browse</b-nav-item>
+          <router-link to="/browse">Browse</router-link>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -23,6 +23,7 @@
             <!-- the if statement below checks to see if we are logged in, if we are then the register and login button will not show -->
             <router-link v-if="!$store.state.isUserLoggedIn" to="/login" class="btn btn-primary mr-2">Login</router-link>
             <router-link v-if="!$store.state.isUserLoggedIn" to="/register" class="btn btn-secondary">Register</router-link>
+             <b-button v-if="$store.state.isUserLoggedIn" @click="logout" class="btn btn-secondary">Log Out</b-button>
           </b-nav-form>
         </b-navbar-nav>
       </b-collapse>
@@ -36,6 +37,15 @@ export default {
   name: 'AppHeader',
   props: {
     msg: String
+  },
+  methods: {
+    logout(){
+      // were going to vuex and emptying values adn setting the to null
+      this.$store.dispatch('setToken', null);
+      this.$store.dispatch('setUser', null);
+      // when someone clicks on the logout button we clear our vuex state adn send them to the homepage
+      this.$router.push({name: 'root'})
+    }
   }
 }
 </script>
