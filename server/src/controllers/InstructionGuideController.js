@@ -26,5 +26,29 @@ async postInstructionGuides (req, res) {
         error: 'An error has occurred trying to post a new Instruction Guide'
         })
     }
+  },
+  async getInstructionGuideById(req, res){
+    try {
+      const instructionGuide = await InstructionGuide.findOne({
+        where: {id: req.params.instructionGuideId}
+    })
+      res.send(instructionGuide);
+    } catch (err) {
+      res.status(500).send({
+         error: 'An error has occurred trying to get an Instruction Guides'
+      })
+    }
+  },
+  async putInstructionGuideById(req, res){
+    try {
+      const instructionGuide = await InstructionGuide.update(req.body, {
+        where: {id: req.params.instructionGuideId}
+    })
+      res.send(instructionGuide);
+    } catch (err) {
+      res.status(500).send({
+         error: 'An error has occurred trying to update an Instruction Guides'
+      })
+    }
   }
 }

@@ -64,7 +64,7 @@
                   </b-form-group>
               </div>
               <div class="col-12">
-                <b-button @click="create" class="w-100" variant="primary">Submit</b-button>
+                <b-button @click="save" class="w-100" variant="primary">Submit</b-button>
               </div>
             </div>
           </b-form>
@@ -79,7 +79,7 @@ import { validationMixin } from 'vuelidate';
 import { required, minLength } from 'vuelidate/lib/validators'
 
 export default {
-  name: "CreateInstructionGuide",
+  name: "EditInstructionGuide",
   components: { Panel },
   data(){
     return{
@@ -107,7 +107,7 @@ export default {
       }
   },
   methods: {
-    async create(){
+    async save(){
       //validation check
       // this.$v.instructionGuide.$touch();
       // if(this.$v.instructionGuide.$anyError){
@@ -116,14 +116,25 @@ export default {
 
       // posts data
       try{
-      await InstructionGuideService.postInstructionGuide(this.instructionGuide);
-      this.$router.push({name: 'browse '});
+      await InstructionGuideService.putInstructionGuide(
+        this.$store.state.route.params.instructionGuideId,
+        this.instructionGuide
+      );
+      this.$router.push({
+        name: 'browse ',
+        params: {
+          instructionGuideId: this.$store.state.route.params.instructionGuideId
+        }
+        });
       }catch(error){
         console.log(error)
       }
     },
   },
- 
+ async mounted() {
+   const instructionGuideId = this.$store.state.route.params.instructionGuideId
+   this.instructionGuide = (await InstructionGuideService.getInstructionGuideById(instructionGuideId)).data;
+ },
 };
 </script>
 
