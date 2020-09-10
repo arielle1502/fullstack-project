@@ -36,4 +36,5 @@ db.sequelize = sequelize // This will allow us to access the sequelize object if
 db.Sequelize = Sequelize // This will allow us to access the Sequelize class if we use this module
 
 //Exports
-module.exports = db
+module.exports = db;
+module.exports.Op = Sequelize.Op;

@@ -12,7 +12,7 @@ module.exports = (app) => {
     app.post('/login', 
     AuthenticationController.login);
 
-    app.get('/instructionGuides', InstructionGuideController.getAllInstructionGuides)
+    app.get('/instructionGuides', InstructionGuideController.getInstructionGuides)
     app.post('/instructionGuides', InstructionGuideController.postInstructionGuides)
     app.get('/instructionGuides/:instructionGuideId', InstructionGuideController.getInstructionGuideById)
     app.put('/instructionGuides/:instructionGuideId', InstructionGuideController.putInstructionGuideById)

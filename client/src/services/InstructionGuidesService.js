@@ -1,9 +1,7 @@
 import Api from '@/services/Api';
 
 export default {
-  getAllInstructionGuides(){
-    return Api().get('instructionGuides')
-  },
+  
   postInstructionGuide(instructionGuide){
     return Api().post('instructionGuides', instructionGuide)
   },
@@ -13,5 +11,7 @@ export default {
   putInstructionGuide(instructionGuideId, instructionGuide){
     return Api().put(`instructionGuides/${instructionGuideId}`,instructionGuide)
   },
-  
+  getInstructionGuides(search){
+    return Api().get('instructionGuides', {params: {search}})
+  },
 }

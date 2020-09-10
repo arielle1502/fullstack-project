@@ -1,5 +1,6 @@
 <template>
  <div>
+  <search></search>
       <panel title="Browse">
         <router-link to="/browse/create" class="btn btn-success mr-2 w-100 mb-3">Create Instruction Guide</router-link>
         <div class="row" >
@@ -30,19 +31,25 @@
 </template>
 
 <script>
-import Panel from '@/components/Panel.vue';
-import InstructionGuidesService from '@/services/InstructionGuidesService'
+import Panel from './Panel.vue';
+import InstructionGuidesService from '@/services/InstructionGuidesService';
+import Search from './Search';
 export default {
   name: "Browse",
   data() {
     return{
     instructionGuides: null
   }},
-  components: { Panel },
-  async mounted(){
-    this.instructionGuides =
-    (await InstructionGuidesService.getAllInstructionGuides()).data;
-  }
+  components: { Panel, Search },
+  watch: {
+    '$route.query.search' : {
+      immediate: true,
+     async handler(value) {
+       this.instructionGuides =
+      (await InstructionGuidesService.getInstructionGuides(value)).data;
+      }
+    }
+  },
  
 };
 </script>
