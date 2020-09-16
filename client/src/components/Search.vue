@@ -6,7 +6,8 @@
 </template>
 
 <script>
-import Panel from './Panel'
+import Panel from './Panel';
+import _ from 'lodash';
 export default {
   name:"Search",
   components: {Panel},
@@ -16,7 +17,7 @@ export default {
     }
   },
   watch: {
-    search(value){
+    search: _.debounce(async function(value){
       const route = {name: 'browse'};
 
       if(this.search !== ''){
@@ -25,7 +26,7 @@ export default {
         }
       }
       this.$router.push(route);
-    },
+    }, 500),
     '$route.query.search' : {
       immediate: true,
       handler(value) {

@@ -41,6 +41,7 @@ export default {
         // were saving to our centralized state
         this.$store.dispatch('setToken', response.data.token);
         this.$store.dispatch('setUser', response.data.user);
+        this.router.push({name: 'browse'});
       } catch (error) {
         console.log(error);
         this.error = error.response.data.error;

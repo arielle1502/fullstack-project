@@ -34,10 +34,14 @@ export default {
   methods: {
     async register() {
       try {
-        await AuthenticationService.register({
+        const response = await AuthenticationService.register({
           email: this.email,
           password: this.password,
         });
+          // were saving to our centralized state
+        this.$store.dispatch('setToken', response.data.token);
+        this.$store.dispatch('setUser', response.data.user);
+        this.router.push({name: 'browse'});
       } catch (error) {
         console.log(error);
         this.error = error.response.data.error;
